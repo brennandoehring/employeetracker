@@ -54,11 +54,40 @@ const connection = mysql.createConnection({
   }
 
 function addEmployee() {
-
+    inquirer.prompt(
+    {
+        name: "first_name",
+        type: "input",
+        message: "What is the employee's first name?"
+    }, 
+    {
+        name: "last_name",
+        type: "input",
+        message: "What is the employee's last name?"
+    },
+    {
+        name: "role_id",
+        type: "input",
+        message: "What is this employee's role?"
+    }, 
+    {
+        name: "manager_id",
+        type: "input",
+        message: "Does this employee have a manager? If so, what is their manager's ID?"
+    })
+    .then(function(answer) {
+        const query = "";
+        connection.query(query, { }, function(err, res) {
+            for (var i = 0; i < res.length; i++) {
+                console.log("");
+            }
+            commandsDisplay();
+        });
+    });
 }
 
 function viewEmployees() {
-
+    
 }
 
 function viewRoles() {
