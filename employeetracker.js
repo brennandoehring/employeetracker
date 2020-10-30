@@ -1,7 +1,6 @@
 const mysql = require("mysql");
 const inquirer = require("inquirer");
 const consoleTable = require("console.table");
-const { SSL_OP_EPHEMERAL_RSA } = require("constants");
 
 const connection = mysql.createConnection({
     host: "localhost",
@@ -124,8 +123,46 @@ const connection = mysql.createConnection({
     });
   }
 
-  function updateEmployee() {
-      
+  async function updateEmployee() {
+      connection.query("SELECT employee.last_name, role.title FROM employee JOIN role ON employee.role_id = role.id;",
+      function(err, res) {
+        if (err) throw err;
+        console.log(res);
+        inquirer.prompt([
+          {
+            name: "lastName",
+            type: "list",
+            choices: function() {
+              let lastName = [];
+              for (let i = 0; i < res.length; i++) {
+                lastName.push(res[i].last_name);
+              }
+              return lastName;
+              },
+              message: "What is the employee's last name?",
+            },
+            {
+              name: "role",
+              type: "list",
+              message: "What is this employee's new role?",
+              choices: roleSelect()
+            },
+        ]).then(function(answers) {
+          let roleID = roleSelect().indexOf(answers.role) + 1;
+          connection.query("UPDATE employee SET WHERE ?",
+          {
+            last_name: answers.lastName
+          },
+          {
+            role_id: roleID
+          },
+          function(err){
+            if (err) throw err;
+            console.table(answers);
+            commandsDisplay();
+          })
+        });
+      });
   }
 
   let roleArr = [];
