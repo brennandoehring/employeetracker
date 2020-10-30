@@ -2,6 +2,7 @@ const mysql = require("mysql");
 const inquirer = require("inquirer");
 const consoleTable = require("console.table");
 
+// Create MySQL connection
 const connection = mysql.createConnection({
     host: "localhost",
     port: 3306,
@@ -15,6 +16,7 @@ const connection = mysql.createConnection({
     commandsDisplay();
   });
 
+  // Initial "home" prompt
   function commandsDisplay() {
     inquirer
       .prompt({
@@ -54,6 +56,7 @@ const connection = mysql.createConnection({
     });
   }
 
+  // Add employee function
   function addEmployee() {
     inquirer.prompt([
     {
@@ -96,6 +99,7 @@ const connection = mysql.createConnection({
     });
   }
 
+  // View all employees function
   function viewEmployees() {
     connection.query("SELECT employee.first_name, employee.last_name, role.title, role.salary, department.name, CONCAT(e.first_name, ' ' ,e.last_name) AS Manager FROM employee INNER JOIN role on role.id = employee.role_id INNER JOIN department on department.id = role.department_id left join employee e on employee.manager_id = e.id;",
     function(err, res) {
@@ -105,6 +109,7 @@ const connection = mysql.createConnection({
     });
   }
 
+  // View all roles function
   function viewRoles() {
     connection.query("SELECT employee.first_name, employee.last_name, role.title AS Title FROM employee JOIN role ON employee.role_id = role.id;",
     function(err, res) {
@@ -114,6 +119,7 @@ const connection = mysql.createConnection({
     });
   }
 
+  // View all departments function
   function viewDepartments() {
     connection.query("SELECT employee.first_name, employee.last_name, department.name AS Department FROM employee JOIN role ON employee.role_id = role.id JOIN department ON role.department_id = department.id ORDER BY employee.id;",
     function(err, res) {
@@ -123,6 +129,7 @@ const connection = mysql.createConnection({
     });
   }
 
+  // Update employee function
   async function updateEmployee() {
       connection.query("SELECT employee.last_name, role.title FROM employee JOIN role ON employee.role_id = role.id;",
       function(err, res) {
@@ -165,6 +172,7 @@ const connection = mysql.createConnection({
       });
   }
 
+  // Role select function for inquirer choices
   let roleArr = [];
   function roleSelect() {
     connection.query("SELECT * FROM role", function(err, res) {
@@ -176,6 +184,7 @@ const connection = mysql.createConnection({
     return roleArr;
   }
 
+  // Manager select function for inquirer choices
   let managersArr = [];
   function managerSelect() {
     connection.query("SELECT first_name, last_name FROM employee WHERE manager_id IS NULL", function(err, res) {
