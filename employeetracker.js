@@ -53,42 +53,46 @@ const connection = mysql.createConnection({
     });
   }
 
-function addEmployee() {
-    inquirer.prompt(
+ function addEmployee() {
+    inquirer.prompt([
     {
-        name: "first_name",
+        name: "firstName",
         type: "input",
         message: "What is the employee's first name?"
     }, 
     {
-        name: "last_name",
+        name: "lastName",
         type: "input",
         message: "What is the employee's last name?"
     },
     {
-        name: "role_id",
-        type: "input",
-        message: "What is this employee's role?"
+        name: "roleID",
+        type: "list",
+        message: "What is this employee's role?",
+        choices: roleSelect()
     }, 
     {
-        name: "manager_id",
-        type: "input",
-        message: "Does this employee have a manager? If so, what is their manager's ID?"
-    })
-    .then(function(answer) {
-        const query = "";
-        connection.query(query, { }, function(err, res) {
-            for (var i = 0; i < res.length; i++) {
-                console.log("");
-            }
-            commandsDisplay();
-        });
+        name: "managerID",
+        type: "list",
+        message: "What is this employee's manager's name?",
+        choices: managerSelect()
+    }
+  ])
+    .then(function(answers) {
+      let roleID = roleSelect().indexOf(answers.role) + 1;
+      let managerID = managerSelect().indexOf(answers.choice) + 1;
+      connection.query("INSERT INTO employee SET ?", 
+      {
+        first_name: answers.firstName,
+        last_name: answers.lastName,
+        role_id: roleID,
+        manager_id: managerID
+      }, function(err) {
+        if (err) throw err;
+        console.log("Added employee!");
+      });
     });
-}
-
-function viewEmployees() {
-    
-}
+  }
 
 function viewRoles() {
 
@@ -100,4 +104,26 @@ function viewDepartments() {
 
 function updateEmployee() {
     
+}
+
+let roleArr = [];
+function roleSelect() {
+  connection.query("SELECT * FROM role", function(err, res) {
+    if (err) throw err;
+    for (let i = 0; i < res.length; i++) {
+      roleArr.push(res[i].title);
+    }
+  });
+  return roleArr;
+}
+
+let managersArr = [];
+function managerSelect() {
+  connection.query("SELECT first_name, last_name FROM employee WHERE manager_id IS NULL", function(err, res) {
+    if (err) throw err;
+    for (let i = 0; i < res.length; i++) {
+      managersArr.push(res[i].first_name);
+    }
+  });
+  return managersArr;
 }
