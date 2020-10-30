@@ -1,6 +1,7 @@
 const mysql = require("mysql");
 const inquirer = require("inquirer");
 const consoleTable = require("console.table");
+const { SSL_OP_EPHEMERAL_RSA } = require("constants");
 
 const connection = mysql.createConnection({
     host: "localhost",
@@ -115,7 +116,12 @@ const connection = mysql.createConnection({
   }
 
   function viewDepartments() {
-
+    connection.query("SELECT employee.first_name, employee.last_name, department.name AS Department FROM employee JOIN role ON employee.role_id = role.id JOIN department ON role.department_id = department.id ORDER BY employee.id;",
+    function(err, res) {
+      if (err) throw err;
+      console.table(res);
+      commandsDisplay();
+    });
   }
 
   function updateEmployee() {
