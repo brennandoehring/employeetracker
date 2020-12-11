@@ -2,13 +2,13 @@
   [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
   ## Table of Contents
-  - [Description] (#description)
-  - [Installation] (#installation)
-  - [Usage] (#usage)
-  - [License] (#license)
-  - [Contributing] (#contributing)
-  - [Tests] (#tests)
-  - [Questions] (#questions)
+  - [Description] (https://github.com/brennandoehring/employeetracker#description)
+  - [Installation] (https://github.com/brennandoehring/employeetracker#installation)
+  - [Usage] (https://github.com/brennandoehring/employeetracker#usage)
+  - [License] (https://github.com/brennandoehring/employeetracker#license)
+  - [Contributing] (https://github.com/brennandoehring/employeetracker#contributing)
+  - [Tests] (https://github.com/brennandoehring/employeetracker#tests)
+  - [Questions] (https://github.com/brennandoehring/employeetracker#questions)
 
   ## Description 
   This CLI application allows a user to view a MySQL database of a company's employees, their roles, departments and salaries. The user can add new employees and assign them roles, departments, and their manager. 
