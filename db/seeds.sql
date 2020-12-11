@@ -1,4 +1,4 @@
-use employees;
+use companyDB;
 INSERT INTO department
     (name)
 VALUES

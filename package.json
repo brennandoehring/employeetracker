@@ -1,0 +1,25 @@
+{
+  "name": "employeetracker",
+  "version": "1.0.0",
+  "description": "[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)",
+  "main": "employeetracker.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/brennandoehring/employeetracker.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/brennandoehring/employeetracker/issues"
+  },
+  "homepage": "https://github.com/brennandoehring/employeetracker#readme",
+  "dependencies": {
+    "console-table": "^0.1.2",
+    "console.table": "^0.10.0",
+    "inquirer": "^7.3.3",
+    "mysql": "^2.18.1"
+  }
+}
